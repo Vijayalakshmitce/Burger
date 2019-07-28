@@ -34,3 +34,8 @@ user ready to order the burger:
 
 User Order burger display in the order section:
 ![burger2](https://user-images.githubusercontent.com/49068436/62009264-3efd2b80-b12b-11e9-974a-cbd7f2acb012.JPG)
+
+Delivered burger which display in the delivered section:
+![deliveredburger](https://user-images.githubusercontent.com/49068436/62009279-63590800-b12b-11e9-8a22-834caceb9d31.JPG)
+
+Delete burger in the order section and delivered section:
