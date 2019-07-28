@@ -1,79 +1,135 @@
+<div class="container">
 
-<h2>Ordered burger</h2>
-<ul>
-    {{#each burgers}}
-    {{#unless devoured}}
- <li>
-        {{this.id}}. {{this.burger_name}}
-        <button type="submit" data-update="{{this.id}}" class ="update">update</button>
-        <button type="submit" data-del="{{this.id}}" class ="delete">delete</button>
-    </li>
-    {{/unless}}
-    {{/each}}
-</ul>
+    <div class="row justify-content-center">
+        <div clas="col col-md-12 text-center mt-2 mb-3">
 
 
-<h2>delivered burger</h2>
-<ul>
-    {{#each burgers}}
-    {{#if devoured}}
- <li>
-        {{this.id}}. {{this.burger_name}}
-        
-        
-        
-    </li>
-    {{/if}}
-    {{/each}}
-</ul>
+            <h1> <img class="img-responsive burger" src="/img/burger1.jpg">Eat a burger</h1><span>
+                <h3>Order Burger</h3>
+                <br>
+                <form id="create">
+                    <textarea name="burgerName" type="text"></textarea>
+                    <button type="submit" id="createSubmit" class="bg-info text-white">Order Burger</button>
+                </form>
+            </span>
+
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="row">
+        <div class="col-lg-6" style="width: 18rem;">
+            <div class="card">
+
+                <div class="card card-body h-100 special-card">
+                    <h4 class="card-title">Ordered Burger</h4>
+                    <p class="card-text">
+
+                        <ul>
+                            {{#each burgers}}
+                            {{#unless devoured}}
+                            <li>
+                                <p> {{this.id}}. {{this.burger_name}}
+                                    <span><button type="submit" data-update="{{this.id}}"
+                                            class="update bg-info text-white">devoured</button>
+                                        <button type="submit" data-del="{{this.id}}"
+                                            class="delete bg-info text-white">delete</button></span></p>
 
 
-<h2>create Burger</h2>
-<form id="create">
-    <textarea name="burgerName" type="text"></textarea>
-    <button type="submit" id="createSubmit">Submit</button>
-</form>
+                            </li>
+                            {{/unless}}
+                            {{/each}}
+                        </ul>
+                    </p>
 
-<script type="text/javascript">
 
-$("#createSubmit").on("click",function(event){
-    event.preventDefault();
-    var x=$("#create [name=burgerName").val();
-    
-  console.log(x);
-    var newBurgerName ={
+                </div>
+            </div>
 
-        burger_name: $("#create [name=burgerName").val()
-    };
+        </div>
+        <div class="col-lg-6" style="width: 18rem;">
+            <div class="card">
+                <div class="card card-body h-100 special-card">
+                    <h4 class="card-title">Delivered Burger</h4>
+                    <p class="card-text">
+                        <ul>
+                            {{#each burgers}}
+                            {{#if devoured}}
+                            <li>
+                                <p> {{this.id}}. {{this.burger_name}}
 
-$.ajax("/app/burger",{
-    type:"POST",
-    data:newBurgerName
-}).then(function(){
-    console.log("Order created");
-    location.reload();
-});
+                                    <span> <button type="submit" data-del="{{this.id}}"
+                                            class="delete bg-info text-white">delete</button></span></p>
 
-});
+                            </li>
+                            {{/if}}
+                            {{/each}}
+                        </ul>
+                    </p>
 
-$(".update").on("click",function(event){
-    event.preventDefault();
-    var id= $(this).data("update");
-    var devoured = 1;
-    console.log(id);
-    var newUpdate ={
-        devoured : devoured
-    }
-console.log(newUpdate)
-    $.ajax("/app/burger/" + id,{
-        type: "PUT",
-        data: newUpdate
-        }).then(function(){
-            console.log("order delived");
-            location.reload();
+
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+
+
+    </div>
+    <script type="text/javascript">
+
+        $("#createSubmit").on("click", function (event) {
+            event.preventDefault();
+            var x = $("#create [name=burgerName").val();
+
+            console.log(x);
+            var newBurgerName = {
+
+                burger_name: $("#create [name=burgerName").val()
+            };
+
+            $.ajax("/app/burger", {
+                type: "POST",
+                data: newBurgerName
+            }).then(function () {
+                console.log("Order created");
+                location.reload();
+            });
+
         });
-});
 
+        $(".update").on("click", function (event) {
+            event.preventDefault();
+            var id = $(this).data("update");
+            var devoured = 1;
+            console.log(id);
+            var newUpdate = {
+                devoured: devoured
+            }
+            console.log(newUpdate)
+            $.ajax("/app/burger/" + id, {
+                type: "PUT",
+                data: newUpdate
+            }).then(function () {
+                console.log("order delived");
+                location.reload();
+            });
+        });
 
+        $(".delete").on("click", function (event) {
+            event.preventDefault();
+            var id = $(this).data("del")
+            $.ajax("/app/burger/ " + id, {
+                type: "DELETE",
+                data: id
+            }).then(function () {
+                console.log("Record Deleted");
+                location.reload();
+            });
 
-</script>
+        });
+
+    </script>
